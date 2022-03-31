@@ -1,0 +1,33 @@
+@NotNull: a constrained CharSequence, Collection, Map, or Array is valid as long as it's not null, but it can be empty.
+ {bu faqat ifodani nullikka tekshiradi}
+
+
+@NotEmpty: a constrained CharSequence, Collection, Map, or Array is valid as long as it's not null, and its size/length is greater than zero.
+{bunda ifodaning size yoki length bo'yicha olganda uni qiymati defaultda  0  dan katta bop'lishi kerak yoki berilgan konstarints bo'yicha qiladi}
+
+
+
+@NotBlank: a constrained String is valid as long as it's not null, and the trimmed length is greater than zero.
+{bu ham not emptyga o'xshagn lekin bu trim() ham qiladi}
+
+////////////////////-----VALIDATION-----\\\\\\\\\\\\\\\\\\\
+//--------------------------VALIDATION-----------------------
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidationExceptions(
+            MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return errors;
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    NOTICE : https://www.baeldung.com/spring-data-mongodb-tutorial
+
+  //atlas cloud db
+    https://stackoverflow.com/questions/39079876/mongosocketreadexception-prematurely-reached-end-of-stream-after-a-period-of-i
